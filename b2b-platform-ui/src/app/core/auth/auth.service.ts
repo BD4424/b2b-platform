@@ -8,13 +8,14 @@ import {
   LoginResponse,
   ChangePasswordRequest
 } from './auth.model';
+import { API_URL } from '../../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private readonly baseUrl = 'http://localhost:8080/api/auth';
+  private readonly baseUrl = `${API_URL}/auth`;
   private readonly tokenKey = 'b2b_access_token';
 
   readonly user = signal<AuthUser | null>(null);

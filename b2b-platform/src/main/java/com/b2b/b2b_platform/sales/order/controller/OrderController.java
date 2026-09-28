@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200", "http://127.0.0.1:4200"})
 public class OrderController {
 
     private final OrderService orderService;
