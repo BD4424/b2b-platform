@@ -1,0 +1,823 @@
+.settings-page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 48px 40px 70px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+
+  color: #6e91a5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: .12em;
+}
+
+.page-heading h1 {
+  margin: 0;
+
+  color: #102f43;
+
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.page-heading p {
+  margin: 9px 0 0;
+
+  color: #7890a0;
+
+  font-size: 14px;
+}
+
+.heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.saved-message {
+  margin-right: 5px;
+
+  color: #16845e;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 0 17px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 0;
+
+  background: #0f9d99;
+  color: #fff;
+
+  transition:
+    background .15s ease,
+    transform .15s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: #078d89;
+  transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.secondary-button {
+  border: 1px solid #d6e1e7;
+
+  background: #fff;
+  color: #607a8a;
+}
+
+.secondary-button:hover {
+  background: #fafcfd;
+  border-color: #bdcfd7;
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.settings-layout {
+  display: grid;
+
+  grid-template-columns: 205px minmax(0, 1fr);
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   SETTINGS NAV
+   ========================================================= */
+
+.settings-nav {
+  position: sticky;
+  top: 24px;
+
+  padding: 8px;
+
+  border: 1px solid #dce6eb;
+  border-radius: 9px;
+
+  background: #fff;
+}
+
+.settings-nav-title {
+  padding: 9px 10px 11px;
+
+  color: #92a3ad;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.settings-nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  min-height: 38px;
+
+  padding: 0 10px;
+
+  border-radius: 6px;
+
+  color: #617b8b;
+
+  font-size: 11px;
+  font-weight: 550;
+
+  text-decoration: none;
+
+  transition:
+    background .14s ease,
+    color .14s ease;
+}
+
+.settings-nav a:hover {
+  background: #f2f8f8;
+  color: #078e8b;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 17px;
+
+  color: #7993a3;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.settings-card {
+  scroll-margin-top: 24px;
+
+  overflow: hidden;
+
+  border: 1px solid #dce6eb;
+  border-radius: 9px;
+
+  background: #fff;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 20px 22px;
+
+  border-bottom: 1px solid #e7edef;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  border-radius: 7px;
+
+  background: #edf8f7;
+
+  color: #0f9d99;
+
+  font-size: 14px;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  color: #29465a;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.section-header p {
+  margin: 4px 0 0;
+
+  color: #91a1ad;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   BUSINESS FIELDS
+   ========================================================= */
+
+.settings-fields {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px 20px;
+
+  padding: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field > span {
+  margin-bottom: 7px;
+
+  color: #425f70;
+
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.field input {
+  width: 100%;
+  height: 40px;
+
+  box-sizing: border-box;
+
+  padding: 0 11px;
+
+  border: 1px solid #d6e1e7;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #fff;
+
+  color: #29465a;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  transition:
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+.field input::placeholder {
+  color: #a0afb8;
+}
+
+.field input:focus {
+  border-color: #7dbdb9;
+
+  box-shadow:
+    0 0 0 3px rgba(15, 157, 153, .07);
+}
+
+
+/* =========================================================
+   SETTING OPTIONS
+   ========================================================= */
+
+.setting-options {
+  padding: 0 22px;
+}
+
+.setting-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  min-height: 74px;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+.setting-option:last-child {
+  border-bottom: 0;
+}
+
+.setting-option > div:first-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.setting-option strong {
+  color: #405d6e;
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.setting-option span {
+  max-width: 650px;
+
+  color: #91a1ad;
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.setting-option select {
+  min-width: 145px;
+  height: 38px;
+
+  padding: 0 10px;
+
+  border: 1px solid #d6e1e7;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #fff;
+  color: #4d6879;
+
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.setting-option select:focus {
+  border-color: #7dbdb9;
+
+  box-shadow:
+    0 0 0 3px rgba(15, 157, 153, .07);
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.inline-number {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+
+  gap: 6px !important;
+
+  flex: 0 0 auto;
+}
+
+.inline-number input {
+  width: 75px;
+  height: 36px;
+
+  padding: 0 9px;
+
+  border: 1px solid #d6e1e7;
+  border-radius: 7px;
+
+  outline: none;
+
+  color: #29465a;
+
+  font-family: inherit;
+  font-size: 11px;
+  text-align: right;
+}
+
+.inline-number input:focus {
+  border-color: #7dbdb9;
+
+  box-shadow:
+    0 0 0 3px rgba(15, 157, 153, .07);
+}
+
+.inline-number span {
+  color: #718896;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   SWITCH
+   ========================================================= */
+
+.switch {
+  position: relative;
+
+  display: inline-flex;
+
+  width: 38px;
+  height: 21px;
+
+  flex: 0 0 38px;
+
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+
+  opacity: 0;
+
+  width: 0;
+  height: 0;
+}
+
+.switch > span {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 999px;
+
+  background: #d8e1e5;
+
+  transition:
+    background .15s ease;
+}
+
+.switch > span::after {
+  content: '';
+
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+
+  transition:
+    transform .15s ease;
+}
+
+.switch input:checked + span {
+  background: #0f9d99;
+}
+
+.switch input:checked + span::after {
+  transform: translateX(17px);
+}
+
+
+/* =========================================================
+   BOTTOM ACTIONS
+   ========================================================= */
+
+.bottom-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 17px 2px 0;
+}
+
+.bottom-actions > span {
+  color: #94a4ad;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* =========================================================
+   SETTINGS NAVIGATION
+   ========================================================= */
+
+.settings-nav {
+  position: sticky;
+  top: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+
+  border: 1px solid #dce6eb;
+  border-radius: 9px;
+
+  background: #fff;
+}
+
+
+/* Heading */
+
+.settings-nav-title {
+  padding: 7px 9px 10px;
+
+  color: #91a1ad;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+
+/* Navigation buttons */
+
+.settings-nav button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 38px;
+
+  margin: 0;
+  padding: 0 10px;
+
+  border: 0;
+  border-radius: 6px;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #617b8b;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 550;
+
+  line-height: 1;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    background-color .15s ease,
+    color .15s ease;
+}
+
+
+/* Hover */
+
+.settings-nav button:hover {
+  background: #f2f8f8;
+
+  color: #078e8b;
+}
+
+
+/* Keyboard focus */
+
+.settings-nav button:focus-visible {
+  outline: 2px solid rgba(15, 157, 153, .22);
+  outline-offset: -2px;
+}
+
+
+/* Icon */
+
+.settings-nav .nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  min-width: 22px;
+
+  margin-right: 2px;
+
+  color: #7893a3;
+
+  font-size: 12px;
+  line-height: 1;
+
+  transition: color .15s ease;
+}
+
+
+.settings-nav button:hover .nav-icon {
+  color: #078e8b;
+}
+
+
+/* =========================================================
+   ACTIVE SECTION
+   ========================================================= */
+
+/*
+ * Optional:
+ * Add [class.active] to a button later if you want
+ * the sidebar to highlight the currently visible section.
+ */
+
+.settings-nav button.active {
+  background: #edf8f7;
+
+  color: #078e8b;
+}
+
+.settings-nav button.active .nav-icon {
+  color: #078e8b;
+}
+
+
+/* =========================================================
+   MOBILE / HORIZONTAL NAV
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+  .settings-nav {
+    position: static;
+
+    display: flex;
+    flex-direction: row;
+
+    overflow-x: auto;
+
+    padding: 6px;
+
+    gap: 2px;
+  }
+
+
+  .settings-nav-title {
+    display: none;
+  }
+
+
+  .settings-nav button {
+    flex: 0 0 auto;
+
+    width: auto;
+
+    min-height: 36px;
+
+    padding: 0 12px;
+
+    white-space: nowrap;
+  }
+
+
+  .settings-nav .nav-icon {
+    width: auto;
+    min-width: auto;
+
+    margin-right: 7px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .settings-page {
+    padding: 28px 16px 50px;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .heading-actions {
+    width: 100%;
+  }
+
+  .heading-actions .primary-button {
+    flex: 1;
+  }
+
+  .settings-fields {
+    grid-template-columns: 1fr;
+
+    padding: 18px;
+  }
+
+  .field--full {
+    grid-column: auto;
+  }
+
+  .section-header {
+    padding: 18px;
+  }
+
+  .setting-options {
+    padding: 0 18px;
+  }
+
+  .setting-option {
+    align-items: flex-start;
+
+    padding: 17px 0;
+  }
+
+  .setting-option > div:first-child {
+    flex: 1;
+  }
+
+  .bottom-actions {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .bottom-actions .primary-button {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,772 @@
+.admin-page {
+  width: min(1050px, 100%);
+
+  margin: 0 auto;
+
+  color: #18384c;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.admin-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+}
+
+
+.eyebrow {
+  margin-bottom: 7px;
+
+  color: #7793a3;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+
+.admin-heading h1 {
+  margin: 0 0 5px;
+
+  color: #102f43;
+
+  font-size: 34px;
+  font-weight: 750;
+
+  letter-spacing: -.8px;
+}
+
+
+.admin-heading p {
+  margin: 0;
+
+  color: #7891a0;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.admin-card {
+  margin-bottom: 18px;
+
+  overflow: hidden;
+
+  border: 1px solid #dce6eb;
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+
+.card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #e7eef1;
+}
+
+
+.card-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 36px;
+
+  border-radius: 8px;
+
+  background: #edf8f8;
+
+  color: #0f9d99;
+
+  font-size: 16px;
+}
+
+
+.card-header h2 {
+  margin: 0 0 3px;
+
+  color: #18384c;
+
+  font-size: 15px;
+  font-weight: 750;
+}
+
+
+.card-header p {
+  margin: 0;
+
+  color: #8499a5;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   CARD BODY
+   ========================================================= */
+
+.card-body {
+  padding: 20px;
+}
+
+
+.profile-overview {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 22px;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+
+.large-avatar {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e7b879;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+
+.profile-overview strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #18384c;
+
+  font-size: 14px;
+}
+
+
+.profile-overview span {
+  color: #8096a4;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px 20px;
+}
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+.field span {
+  color: #466579;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+.field input {
+  width: 100%;
+
+  min-height: 40px;
+
+  padding: 0 12px;
+
+  border: 1px solid #d5e1e6;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #fff;
+
+  color: #28475a;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+
+.field input:focus {
+  border-color: #65b9b6;
+
+  box-shadow: 0 0 0 3px rgba(15, 157, 153, .08);
+}
+
+
+.field input:disabled {
+  background: #f6f8f9;
+
+  color: #8195a1;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 14px;
+
+  margin-top: 22px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #edf1f3;
+}
+
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  min-height: 38px;
+
+  padding: 0 16px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.primary-button {
+  border: 1px solid #0f9d99;
+
+  background: #0f9d99;
+
+  color: #fff;
+}
+
+
+.primary-button:hover {
+  background: #0b8e8b;
+}
+
+
+.secondary-button {
+  border: 1px solid #d4e0e5;
+
+  background: #fff;
+
+  color: #557083;
+}
+
+
+.secondary-button:hover {
+  background: #f6f9fa;
+}
+
+
+.saved-message {
+  margin-right: auto;
+
+  color: #15947f;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SETTINGS ROW
+   ========================================================= */
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 17px 20px;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+
+.settings-row:last-child {
+  border-bottom: 0;
+}
+
+
+.settings-row strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #28475a;
+
+  font-size: 12px;
+}
+
+
+.settings-row > div span {
+  color: #8196a3;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   ROLE
+   ========================================================= */
+
+.role-badge,
+.access-badge {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 26px;
+
+  padding: 0 9px;
+
+  border-radius: 14px;
+
+  background: #eaf6f5;
+
+  color: #168b86;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PERMISSIONS
+   ========================================================= */
+
+.permission-list {
+  padding: 0 20px;
+}
+
+
+.permission-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 15px 0;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+
+.permission-row:last-child {
+  border-bottom: 0;
+}
+
+
+.permission-row strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #28475a;
+
+  font-size: 12px;
+}
+
+
+.permission-row span:not(.access-badge) {
+  color: #8196a3;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+
+.activity-row {
+  display: grid;
+
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 15px 20px;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+
+.activity-row:last-child {
+  border-bottom: 0;
+}
+
+
+.activity-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #0f9d99;
+}
+
+
+.activity-row strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #28475a;
+
+  font-size: 11px;
+}
+
+
+.activity-row span {
+  color: #8196a3;
+
+  font-size: 10px;
+}
+
+
+.activity-row small {
+  color: #9aabb4;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   DANGER
+   ========================================================= */
+
+.danger-card {
+  border-color: #eadede;
+}
+
+
+.danger-icon {
+  background: #fff3f2;
+
+  color: #d95c55;
+}
+
+
+.danger-button {
+  border: 1px solid #e6c9c7;
+
+  background: #fff;
+
+  color: #d4514a;
+}
+
+
+.danger-button:hover {
+  background: #fff5f4;
+
+  border-color: #dca7a3;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .admin-heading h1 {
+    font-size: 29px;
+  }
+
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .settings-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  .permission-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  .card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+
+  .saved-message {
+    margin-right: 0;
+  }
+
+}
+
+.password-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(11, 36, 53, .42);
+  backdrop-filter: blur(2px);
+}
+
+.password-modal {
+  width: min(460px, 100%);
+
+  overflow: hidden;
+
+  background: #fff;
+  border: 1px solid #dfe7ea;
+  border-radius: 14px;
+
+  box-shadow:
+    0 24px 70px rgba(11, 36, 53, .2);
+}
+
+.password-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 24px 24px 20px;
+
+  border-bottom: 1px solid #edf1f3;
+}
+
+.password-modal-header h2 {
+  margin: 5px 0 5px;
+
+  color: #102c3d;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.password-modal-header p {
+  margin: 0;
+
+  color: #71838d;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 32px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #dfe7ea;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #71838d;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background .18s ease,
+    color .18s ease,
+    border-color .18s ease;
+}
+
+.modal-close:hover:not(:disabled) {
+  background: #f5f8f9;
+  border-color: #cfdadd;
+  color: #102c3d;
+}
+
+.modal-close:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.password-modal-body {
+  padding: 22px 24px 8px;
+}
+
+.password-modal-body .field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.password-modal-body .field > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #304b5a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.password-modal-body .field input {
+  width: 100%;
+  height: 43px;
+
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border: 1px solid #d8e1e5;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #fff;
+  color: #213c4b;
+
+  font-size: 13px;
+
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.password-modal-body .field input:focus {
+  border-color: #7d9aaa;
+
+  box-shadow:
+    0 0 0 3px rgba(125, 154, 170, .12);
+}
+
+.password-modal-body .field input:disabled {
+  background: #f5f7f8;
+  cursor: not-allowed;
+}
+
+.password-hint {
+  margin: 2px 0 14px;
+
+  color: #84939b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.password-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+
+  margin-bottom: 16px;
+  padding: 10px 12px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.password-message > span:first-child {
+  flex: 0 0 auto;
+  font-weight: 800;
+}
+
+.password-message.error {
+  border: 1px solid #efcccc;
+  background: #fff5f5;
+  color: #b64242;
+}
+
+.password-message.success {
+  border: 1px solid #cce5d7;
+  background: #f3faf5;
+  color: #287348;
+}
+
+.password-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 16px 24px 20px;
+
+  border-top: 1px solid #edf1f3;
+}
+
+.password-modal-actions .secondary-button,
+.password-modal-actions .primary-button {
+  min-width: 120px;
+}

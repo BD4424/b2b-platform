@@ -1,0 +1,291 @@
+<section class="form-page">
+
+  <a
+    routerLink="/customers"
+    class="back">
+    ← Back to customers
+  </a>
+
+
+  <div class="heading">
+
+    <div class="eyebrow">
+      CRM / CUSTOMERS
+    </div>
+
+    <h1>
+      {{ editing ? 'Edit customer' : 'Add customer' }}
+    </h1>
+
+    <p>
+      Capture the customer information your sales team needs.
+    </p>
+
+  </div>
+
+
+  @if (error) {
+    <div class="error-banner">
+      {{ error }}
+    </div>
+  }
+
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="save()"
+    class="form-card">
+
+
+    <!-- Basic information -->
+
+    <div class="section-title">
+
+      <strong>
+        Basic information
+      </strong>
+
+      <span>
+        Customer identity and contact details.
+      </span>
+
+    </div>
+
+
+    <div class="grid">
+
+      <label class="field field--wide">
+
+        <span>
+          Customer / company name *
+        </span>
+
+        <input
+          formControlName="name"
+          placeholder="e.g. ABC Electricals" />
+
+        @if (
+          form.controls.name.invalid &&
+          form.controls.name.touched
+        ) {
+          <small>
+            Customer name is required.
+          </small>
+        }
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          Customer type *
+        </span>
+
+        <select formControlName="customerType">
+
+          <option value="">
+            Select type
+          </option>
+
+          @for (
+            type of customerTypes;
+            track type
+          ) {
+            <option [value]="type">
+              {{ type }}
+            </option>
+          }
+
+        </select>
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          Phone
+        </span>
+
+        <input
+          formControlName="phone"
+          placeholder="e.g. 9876543210" />
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          Email
+        </span>
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="e.g. accounts@abc.com" />
+
+      </label>
+
+    </div>
+
+
+    <!-- Location -->
+
+    <div class="section-title">
+
+      <strong>
+        Location
+      </strong>
+
+      <span>
+        Customer address and location information.
+      </span>
+
+    </div>
+
+
+    <div class="grid">
+
+      <label class="field field--wide">
+
+        <span>
+          Address
+        </span>
+
+        <input
+          formControlName="address"
+          placeholder="Street, building, area..." />
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          City
+        </span>
+
+        <input
+          formControlName="city"
+          placeholder="e.g. Pune" />
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          State
+        </span>
+
+        <input
+          formControlName="state"
+          placeholder="e.g. Maharashtra" />
+
+      </label>
+
+
+      <label class="field">
+
+        <span>
+          Postal code
+        </span>
+
+        <input
+          formControlName="postalCode"
+          placeholder="e.g. 411001" />
+
+      </label>
+
+    </div>
+
+
+    <!-- Financial -->
+
+    <div class="section-title">
+
+      <strong>
+        Financial
+      </strong>
+
+      <span>
+        Credit terms and current outstanding amount.
+      </span>
+
+    </div>
+
+
+    <div class="grid">
+
+      <label class="field">
+
+        <span>
+          Credit limit (₹)
+        </span>
+
+        <input
+          type="number"
+          min="0"
+          formControlName="creditLimit" />
+
+      </label>
+
+
+      @if (editing) {
+
+        <div class="financial-info">
+
+          <span>
+            Current outstanding
+          </span>
+
+          <strong>
+            ₹{{ 0 | number:'1.2-2' }}
+          </strong>
+
+          <small>
+            Outstanding amount will be connected
+            to sales and payments later.
+          </small>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <a
+        routerLink="/customers"
+        class="secondary-button">
+        Cancel
+      </a>
+
+      <button
+        class="primary-button"
+        type="submit"
+        [disabled]="saving">
+
+        {{
+          saving
+            ? 'Saving...'
+            : (
+                editing
+                  ? 'Save changes'
+                  : 'Create customer'
+              )
+        }}
+
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

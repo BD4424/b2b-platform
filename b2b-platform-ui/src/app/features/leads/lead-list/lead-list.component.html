@@ -1,0 +1,431 @@
+<section class="leads-page">
+
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <div class="page-heading">
+
+    <div>
+
+      <div class="eyebrow">
+        SALES OPERATIONS
+      </div>
+
+      <h1>
+        Leads
+      </h1>
+
+      <p>
+        Potential customers and the sales pipeline.
+      </p>
+
+    </div>
+
+
+    <a
+      routerLink="/leads/new"
+      class="primary-button">
+
+      + Add lead
+
+    </a>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       PIPELINE
+       ===================================================== -->
+
+  <div class="pipeline-card">
+
+    <div class="pipeline-header">
+
+      <div>
+
+        <strong>
+          Sales pipeline
+        </strong>
+
+        <span>
+          Track leads through each stage.
+        </span>
+
+      </div>
+
+      <span class="pipeline-total">
+        {{ totalElements }} leads
+      </span>
+
+    </div>
+
+
+    <div class="pipeline-stages">
+
+      @for (
+        status of statuses;
+        track status
+      ) {
+
+        <button
+          type="button"
+          class="pipeline-stage"
+          [class.active]="selectedStatus === status"
+          (click)="selectedStatus = status; onStatusChange()">
+
+          <span
+            class="pipeline-dot"
+            [class]="statusClass(status)">
+          </span>
+
+          <span class="pipeline-stage__label">
+            {{ formatStatus(status) }}
+          </span>
+
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       SEARCH
+       ===================================================== -->
+
+  <div class="toolbar">
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        ⌕
+      </span>
+
+      <input
+        type="text"
+        [(ngModel)]="search"
+        (keydown)="onSearch($event)"
+        placeholder="Search by lead name or company..." />
+
+    </div>
+
+
+    <select
+      [(ngModel)]="selectedStatus"
+      (change)="onStatusChange()">
+
+      <option value="">
+        All statuses
+      </option>
+
+      @for (
+        status of statuses;
+        track status
+      ) {
+
+        <option [value]="status">
+          {{ formatStatus(status) }}
+        </option>
+
+      }
+
+    </select>
+
+
+    <button
+      type="button"
+      class="reset-button"
+      (click)="reset()">
+
+      Reset
+
+    </button>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ERROR
+       ===================================================== -->
+
+  @if (error) {
+
+    <div class="error-banner">
+      {{ error }}
+    </div>
+
+  }
+
+
+
+  <!-- =====================================================
+       TABLE
+       ===================================================== -->
+
+  <div class="table-card">
+
+
+    <div class="table-header">
+
+      <strong>
+        Lead directory
+      </strong>
+
+      <span>
+        {{ totalElements }} leads
+      </span>
+
+    </div>
+
+
+    @if (loading) {
+
+      <div class="table-state">
+        Loading leads...
+      </div>
+
+    } @else if (leads.length === 0) {
+
+      <div class="table-state">
+
+        <strong>
+          No leads found
+        </strong>
+
+        <span>
+          Try changing your search or filters.
+        </span>
+
+      </div>
+
+    } @else {
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                LEAD
+              </th>
+
+              <th>
+                COMPANY
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+              <th>
+                SOURCE
+              </th>
+
+              <th>
+                EXPECTED VALUE
+              </th>
+
+              <th>
+                EXPECTED CLOSE
+              </th>
+
+              <th></th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              lead of leads;
+              track lead.id
+            ) {
+
+              <tr
+                class="lead-row"
+                (click)="openLead(lead.id)">
+
+
+                <!-- Lead -->
+
+                <td>
+
+                  <div class="lead-person">
+
+                    <div class="lead-avatar">
+                      {{ lead.name.charAt(0).toUpperCase() }}
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        {{ lead.name }}
+                      </strong>
+
+                      @if (lead.email) {
+
+                        <small>
+                          {{ lead.email }}
+                        </small>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- Company -->
+
+                <td>
+
+                  <span class="company-name">
+                    {{ lead.company || '—' }}
+                  </span>
+
+                </td>
+
+
+                <!-- Status -->
+
+                <td>
+
+                  <span
+                    class="status-badge"
+                    [class]="statusClass(lead.status)">
+
+                    <span class="status-dot"></span>
+
+                    {{ formatStatus(lead.status) }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- Source -->
+
+                <td>
+
+                  <span class="source">
+                    {{ formatSource(lead.source) }}
+                  </span>
+
+                </td>
+
+
+                <!-- Value -->
+
+                <td>
+
+                  <strong class="expected-value">
+                    ₹{{ lead.expectedValue | number:'1.2-2' }}
+                  </strong>
+
+                </td>
+
+
+                <!-- Close date -->
+
+                <td>
+
+                  <span class="close-date">
+                    {{ formatDate(lead.expectedCloseDate) }}
+                  </span>
+
+                </td>
+
+
+                <!-- Actions -->
+
+                <td
+                  class="actions"
+                  (click)="$event.stopPropagation()">
+
+                  <a
+                    [routerLink]="[
+                      '/leads',
+                      lead.id,
+                      'edit'
+                    ]"
+                    (click)="$event.stopPropagation()">
+
+                    Edit
+
+                  </a>
+
+
+                  <button
+                    type="button"
+                    (click)="deleteLead(lead)">
+
+                    Delete
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- Pagination -->
+
+      <div class="pagination">
+
+        <span>
+          Page {{ page + 1 }} of {{ totalPages || 1 }}
+        </span>
+
+
+        <div>
+
+          <button
+            type="button"
+            [disabled]="page === 0"
+            (click)="previousPage()">
+
+            ←
+
+          </button>
+
+
+          <button
+            type="button"
+            [disabled]="page >= totalPages - 1"
+            (click)="nextPage()">
+
+            →
+
+          </button>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</section>

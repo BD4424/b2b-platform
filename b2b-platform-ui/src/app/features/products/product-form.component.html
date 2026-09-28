@@ -1,0 +1,187 @@
+<section class="form-page">
+  <a routerLink="/products" class="back">← Back to products</a>
+  <div class="heading">
+    <div class="eyebrow">CATALOG / PRODUCTS</div>
+    <h1>{{ editing ? 'Edit product' : 'Add product' }}</h1>
+    <p>Capture the commercial information your sales team needs.</p>
+  </div>
+
+  @if (error) { <div class="error-banner">{{ error }}</div> }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="form-card">
+    <div class="section-title"><strong>Basic information</strong><span>Required fields are marked by validation.</span>
+    </div>
+    <div class="grid">
+      <label class="field field--wide"><span>Product name *</span><input formControlName="name"
+          placeholder="e.g. Havells LT Power Cable" /><small
+          *ngIf="form.controls.name.invalid && form.controls.name.touched">Product name is required.</small></label>
+      <label class="field"><span>SKU *</span><input formControlName="sku" placeholder="e.g. H-LT-4C-16" /></label>
+      <label class="field"><span>Brand *</span><select formControlName="brandId">
+          <option [ngValue]="0">Select brand</option>@for (brand of brands; track brand.id) {<option
+            [ngValue]="brand.id">{{brand.name}}</option>}
+        </select></label>
+      <label class="field"><span>Category *</span><select formControlName="categoryId">
+          <option [ngValue]="0">Select category</option>@for (category of categories; track category.id) {<option
+            [ngValue]="category.id">{{category.name}}</option>}
+        </select></label>
+      <label class="field"><span>Unit</span><input formControlName="unit" placeholder="pcs / metre / box" /></label>
+    </div>
+
+    <div class="section-title"><strong>Pricing & stock</strong><span>These values will feed sales and margin reporting
+        later.</span></div>
+    <div class="grid">
+      <label class="field"><span>Selling price (₹) *</span><input type="number" min="0"
+          formControlName="sellingPrice" /></label>
+      <label class="field"><span>Cost price (₹)</span><input type="number" min="0"
+          formControlName="costPrice" /></label>
+      <label class="field"><span>Stock quantity *</span><input type="number" min="0"
+          formControlName="stockQuantity" /></label>
+    </div>
+
+    <div class="section-title"><strong>Sales notes</strong><span>Product intelligence will expand here in the next
+        slice.</span></div>
+    <label class="field"><span>Sales notes</span><textarea rows="4" formControlName="salesNotes"
+        placeholder="Key selling points, use cases, availability notes..."></textarea></label>
+
+    <div class="section-title">
+      <strong>Product specifications</strong>
+      <span>
+        Technical details that help your sales team recommend the product.
+      </span>
+    </div>
+
+    @if (!editing) {
+
+    <div class="info-banner">
+      Create the product first to add specifications.
+    </div>
+
+    } @else {
+
+    @if (specificationError) {
+    <div class="error-banner">
+      {{ specificationError }}
+    </div>
+    }
+
+    @if (specificationsLoading) {
+
+    <div class="state">
+      Loading specifications...
+    </div>
+
+    } @else {
+
+    @if (specifications.length > 0) {
+
+    <div class="specification-list">
+
+      @for (
+      specification of paginatedSpecifications;
+      track specification.id
+      ) {
+
+      <div class="specification-row">
+
+        <div class="specification-content">
+          <strong>
+            {{ specification.specificationName }}
+          </strong>
+
+          <span>
+            {{ specification.specificationValue }}
+          </span>
+        </div>
+
+        <button type="button" class="delete-button" (click)="deleteSpecification(specification)">
+          Delete
+        </button>
+
+      </div>
+
+      }
+
+    </div>
+
+    @if (specificationTotalPages > 1) {
+
+    <div class="specification-pagination">
+
+      <span>
+        Showing
+        {{ specificationStartIndex }}–{{ specificationEndIndex }}
+        of
+        {{ specifications.length }}
+      </span>
+
+      <div class="specification-pagination-controls">
+
+        <button type="button" (click)="previousSpecificationPage()" [disabled]="specificationPage === 0">
+          ←
+        </button>
+
+        <span>
+          {{ specificationPage + 1 }}
+          /
+          {{ specificationTotalPages }}
+        </span>
+
+        <button type="button" (click)="nextSpecificationPage()"
+          [disabled]="specificationPage + 1 >= specificationTotalPages">
+          →
+        </button>
+
+      </div>
+
+    </div>
+
+    }
+
+    } @else {
+
+    <div class="empty-specifications">
+      No specifications added yet.
+    </div>
+
+    }
+
+    <div class="specification-add">
+
+      <div class="grid">
+
+        <label class="field">
+          <span>Specification *</span>
+
+          <input [(ngModel)]="specificationName" [ngModelOptions]="{ standalone: true }" maxlength="100"
+            placeholder="e.g. Voltage" />
+        </label>
+
+        <label class="field">
+          <span>Value *</span>
+
+          <input [(ngModel)]="specificationValue" [ngModelOptions]="{ standalone: true }" maxlength="100"
+            placeholder="e.g. 230V" />
+        </label>
+
+      </div>
+
+      <button type="button" class="secondary-button" (click)="addSpecification()" [disabled]="specificationSaving">
+
+        {{ specificationSaving
+        ? 'Adding...'
+        : '+ Add specification'
+        }}
+
+      </button>
+
+    </div>
+
+    }
+
+    }
+
+    <div class="form-actions"><a routerLink="/products" class="secondary-button">Cancel</a><button
+        class="primary-button" type="submit" [disabled]="saving">{{ saving ? 'Saving...' : (editing ? 'Save changes' :
+        'Create product') }}</button></div>
+  </form>
+</section>

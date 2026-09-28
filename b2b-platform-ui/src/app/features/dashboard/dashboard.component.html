@@ -1,0 +1,124 @@
+<section class="dashboard">
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">SALES OPERATIONS / Overview</div>
+      <h1>Welcome, Prabhutosh <span>✦</span></h1>
+      <p>Here’s what needs your attention today.</p>
+    </div>
+    <div class="heading-actions">
+      <button class="secondary-button">⇩ Export</button>
+      <button class="primary-button">+ Add product</button>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    @for (card of kpis; track card.label) {
+      <article class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-label"><span class="kpi-icon" [class]="'kpi-icon kpi-icon--' + card.accent">↗</span>{{ card.label }}</div>
+          <button class="more-button" aria-label="More options">•••</button>
+        </div>
+        <strong>{{ card.value }}</strong>
+        <div class="kpi-change"><span>↑ {{ card.change }}</span> vs. last month</div>
+        <div class="spark-bars" aria-hidden="true">
+          @for (bar of card.bars; track $index) {
+            <span [style.height.%]="bar"></span>
+          }
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="main-grid">
+    <article class="panel pipeline-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Sales pipeline</h2>
+          <p>Deals by stage this month</p>
+        </div>
+        <select [value]="period()" (change)="setPeriod($any($event.target).value)">
+          <option>This month</option>
+          <option>Last month</option>
+          <option>This quarter</option>
+        </select>
+      </div>
+
+      <div class="pipeline-list">
+        @for (stage of pipeline; track stage.name) {
+          <div class="pipeline-row">
+            <div class="stage-name">{{ stage.name }}</div>
+            <span class="count">{{ stage.count }}</span>
+            <div class="track"><span [class]="'fill fill--' + stage.accent" [style.width.%]="stage.width"></span></div>
+            <strong>{{ stage.value }}</strong>
+          </div>
+        }
+      </div>
+      <a class="panel-link" href="#" (click)="$event.preventDefault()">View sales pipeline →</a>
+    </article>
+
+    <article class="panel actions-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Priority actions <span class="action-count">5</span></h2>
+          <p>Things that need a response</p>
+        </div>
+      </div>
+      <div class="actions-list">
+        @for (action of priorityActions; track action.title) {
+          <a class="action-row" href="#" (click)="$event.preventDefault()">
+            <span class="action-icon" [class]="'action-icon action-icon--' + action.tone">{{ action.icon }}</span>
+            <span><strong>{{ action.title }}</strong><small>{{ action.detail }}</small></span>
+            <span class="action-arrow">→</span>
+          </a>
+        }
+      </div>
+      <a class="panel-link" href="#" (click)="$event.preventDefault()">See all actions →</a>
+    </article>
+
+    <article class="panel orders-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Recent orders</h2>
+          <p>Latest customer purchases</p>
+        </div>
+        <a class="view-all" href="#" (click)="$event.preventDefault()">View all →</a>
+      </div>
+      <div class="orders-table-wrap">
+        <table>
+          <thead><tr><th>ORDER</th><th>CUSTOMER</th><th>AMOUNT</th><th>STATUS</th></tr></thead>
+          <tbody>
+            @for (order of orders; track order.id) {
+              <tr>
+                <td><strong>{{ order.id }}</strong><small>{{ order.time }}</small></td>
+                <td><span class="customer"><span class="customer-avatar">{{ order.initials }}</span>{{ order.customer }}</span></td>
+                <td><strong>{{ order.amount }}</strong></td>
+                <td><span class="status" [class]="'status status--' + order.tone">{{ order.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="panel intelligence-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Product intelligence</h2>
+          <p>Most viewed product this week</p>
+        </div>
+        <button class="more-button">•••</button>
+      </div>
+      <div class="product-preview">
+        <div class="product-art" aria-hidden="true"><span></span></div>
+        <div class="product-copy">
+          <small>ELECTRICALS</small>
+          <h3>Havells LT Power Cable</h3>
+          <p>3.5 Core × 240 sq. mm.</p>
+          <div class="product-stats">↗ 38 views &nbsp;&nbsp; ◷ 6 quote requests</div>
+        </div>
+      </div>
+      <div class="why-box"><strong>✦ &nbsp; Why it stands out</strong><span>Higher current capacity and 15-year warranty vs. market average.</span></div>
+      <a class="panel-link" href="#" (click)="$event.preventDefault()">Open product comparison →</a>
+    </article>
+  </div>
+</section>

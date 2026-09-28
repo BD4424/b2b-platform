@@ -1,0 +1,296 @@
+<div class="app-shell">
+  <aside class="sidebar" [class.sidebar--open]="mobileMenuOpen()">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="brand-name">Supply<span>Desk</span></span>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a routerLink="/overview" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">◯</span><span>Overview</span>
+      </a>
+      <a routerLink="/products" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">◇</span><span>Products</span>
+      </a>
+      <a routerLink="/customers" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">◯</span><span>Customers</span>
+      </a>
+      <a routerLink="/orders" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon nav-icon--orders">═</span><span>Orders</span>
+      </a>
+      <a routerLink="/leads" routerLinkActive="active" (click)="closeMenu()">
+        <span class="nav-icon">◡</span><span>Leads</span>
+        <span class="nav-badge">12</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <a class="settings-link" routerLink="/settings" routerLinkActive="active" (click)="closeMenu()">
+      <span class="nav-icon">◯</span><span>Settings</span>
+    </a>
+
+    <div class="help-card">
+
+      <div class="help-icon">
+        ✦
+      </div>
+
+      <strong>
+        Need a hand?
+      </strong>
+
+      <p>
+        Browse quick guides for your sales workspace.
+      </p>
+
+      <button type="button" class="help-link" (click)="openHelp()">
+
+        View guide
+        <span>→</span>
+
+      </button>
+
+    </div>
+
+    <a class="user-card" routerLink="/admin" routerLinkActive="user-card--active" (click)="closeMenu()">
+
+      <div class="avatar">
+        BD
+      </div>
+
+      <div class="user-info">
+
+        <strong>
+          {{ authService.user()?.name || 'User' }}
+        </strong>
+
+        <span>
+          {{ authService.user()?.role || 'USER' }}
+        </span>
+
+      </div>
+
+      <span class="user-menu-icon" aria-hidden="true">
+        ⋯
+      </span>
+
+    </a>
+  </aside>
+
+  @if (helpOpen()) {
+
+  <div class="help-backdrop" (click)="closeHelp()">
+
+  </div>
+
+
+  <aside class="help-panel" role="dialog" aria-modal="true" aria-labelledby="help-panel-title"
+    (click)="$event.stopPropagation()">
+
+    <div class="help-panel-header">
+
+      <div>
+
+        <span class="help-panel-eyebrow">
+          WORKSPACE GUIDE
+        </span>
+
+        <h2 id="help-panel-title">
+          How can we help?
+        </h2>
+
+        <p>
+          Quick guides for the main SupplyDesk workflows.
+        </p>
+
+      </div>
+
+
+      <button type="button" class="help-close" aria-label="Close help" (click)="closeHelp()">
+
+        ×
+
+      </button>
+
+    </div>
+
+
+    <div class="help-panel-body">
+
+
+      <!-- Products -->
+
+      <a routerLink="/products" class="guide-item" (click)="closeHelp()">
+
+        <div class="guide-icon guide-icon--products">
+          ◇
+        </div>
+
+        <div class="guide-content">
+
+          <strong>
+            Products
+          </strong>
+
+          <span>
+            Manage products, pricing, stock and specifications.
+          </span>
+
+        </div>
+
+        <span class="guide-arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- Customers -->
+
+      <a routerLink="/customers" class="guide-item" (click)="closeHelp()">
+
+        <div class="guide-icon guide-icon--customers">
+          ○
+        </div>
+
+        <div class="guide-content">
+
+          <strong>
+            Customers
+          </strong>
+
+          <span>
+            Manage customer profiles, credit limits and outstanding balances.
+          </span>
+
+        </div>
+
+        <span class="guide-arrow">
+          →
+        </span>
+      </a>
+
+      <!-- Orders -->
+      <a routerLink="/orders" class="guide-item" (click)="closeHelp()">
+
+        <div class="guide-icon guide-icon--orders">
+          ═
+        </div>
+
+        <div class="guide-content">
+          <strong>
+            Orders
+          </strong>
+          <span>
+            Create orders, apply discounts and track order status.
+          </span>
+        </div>
+        <span class="guide-arrow">
+          →
+        </span>
+      </a>
+
+      <!-- Leads -->
+
+      <a routerLink="/leads" class="guide-item" (click)="closeHelp()">
+
+        <div class="guide-icon guide-icon--leads">
+          ◡
+        </div>
+
+        <div class="guide-content">
+
+          <strong>
+            Leads
+          </strong>
+
+          <span>
+            Track prospects through your sales pipeline.
+          </span>
+
+        </div>
+
+        <span class="guide-arrow">
+          →
+        </span>
+
+      </a>
+
+      <!-- Settings -->
+
+      <a routerLink="/settings" class="guide-item" (click)="closeHelp()">
+        <div class="guide-icon guide-icon--settings">
+          ⚙
+        </div>
+        <div class="guide-content">
+
+          <strong>
+            Settings
+          </strong>
+
+          <span>
+            Configure business, sales, inventory and notification preferences.
+          </span>
+        </div>
+        <span class="guide-arrow">
+          →
+        </span>
+      </a>
+
+    </div>
+
+
+    <div class="help-panel-footer">
+
+      <span class="help-footer-icon">
+        ✦
+      </span>
+
+      <span>
+        More workspace guides will be added here.
+      </span>
+
+    </div>
+
+  </aside>
+
+  }
+
+  <div class="sidebar-overlay" [class.sidebar-overlay--visible]="mobileMenuOpen()" (click)="closeMenu()"></div>
+
+  <section class="workspace">
+
+    <header class="topbar">
+
+      <button class="mobile-menu" type="button" (click)="toggleMenu()" aria-label="Open navigation">
+        ☰
+      </button>
+
+      <div class="topbar-actions">
+
+        <button type="button" class="topbar-button" data-tooltip="Notifications" aria-label="Notifications">
+          ♧
+        </button>
+
+        <button type="button" class="topbar-button" data-tooltip="Help" aria-label="Help">
+          ?
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="page-content">
+
+      <router-outlet />
+
+    </main>
+
+  </section>
+</div>
+
+<app-ai-assistant></app-ai-assistant>

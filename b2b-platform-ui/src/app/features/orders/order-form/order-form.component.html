@@ -1,0 +1,700 @@
+<section class="form-page">
+
+    <!-- Back -->
+    <a routerLink="/orders" class="back">
+        ← Back to orders
+    </a>
+
+
+    <!-- Page heading -->
+    <div class="heading">
+
+        <div class="eyebrow">
+            SALES / ORDERS
+        </div>
+
+        <h1>
+            {{ editing ? 'Edit order' : 'Create order' }}
+        </h1>
+
+        <p>
+            Create an order for a customer and add the required products.
+        </p>
+
+    </div>
+
+
+    <!-- Global error -->
+    @if (error) {
+
+        <div class="error-banner">
+            {{ error }}
+        </div>
+
+    }
+
+
+    @if (loading) {
+
+        <div class="form-card state">
+            Loading order...
+        </div>
+
+    } @else {
+
+        <form
+            [formGroup]="form"
+            (ngSubmit)="save()"
+            class="form-card">
+
+
+            <!-- =====================================================
+                 ORDER INFORMATION
+                 ===================================================== -->
+
+            <div class="section-title">
+
+                <div>
+                    <strong>
+                        Order information
+                    </strong>
+
+                    <span>
+                        Customer and order details.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <!-- Customer -->
+                <label class="field">
+
+                    <span>
+                        Customer *
+                    </span>
+
+                    <select
+                        formControlName="customerId"
+                        (change)="refreshCredit()">
+
+                        <option [ngValue]="0">
+                            Select customer
+                        </option>
+
+                        @for (
+                            customer of customers;
+                            track customer.id
+                        ) {
+
+                            <option [ngValue]="customer.id">
+                                {{ customer.name }}
+                            </option>
+
+                        }
+
+                    </select>
+
+                    @if (
+                        form.controls.customerId.invalid &&
+                        form.controls.customerId.touched
+                    ) {
+
+                        <small class="field-error">
+                            Please select a customer.
+                        </small>
+
+                    }
+
+                </label>
+
+
+                <!-- Order date -->
+                <label class="field">
+
+                    <span>
+                        Order date *
+                    </span>
+
+                    <input
+                        type="date"
+                        formControlName="orderDate" />
+
+                </label>
+
+            </div>
+
+
+            <!-- =====================================================
+                 CUSTOMER CREDIT
+                 ===================================================== -->
+
+            @if (creditLoading) {
+
+                <div class="credit-loading">
+                    Checking customer credit...
+                </div>
+
+            }
+
+
+            @if (credit && !creditLoading) {
+
+                <div
+                    class="credit-panel"
+                    [class.credit-panel--low]="credit.creditLow"
+                    [class.credit-panel--exceeded]="credit.creditExceeded">
+
+
+                    <!-- Credit status -->
+                    <div class="credit-status">
+
+                        <div class="credit-status__icon">
+
+                            @if (credit.creditExceeded) {
+                                !
+                            } @else if (credit.creditLow) {
+                                !
+                            } @else {
+                                ✓
+                            }
+
+                        </div>
+
+
+                        <div class="credit-status__content">
+
+                            @if (credit.creditExceeded) {
+
+                                <strong>
+                                    Credit limit exceeded
+                                </strong>
+
+                                <span>
+                                    This order exceeds the customer's
+                                    available credit, but the order can
+                                    still be created.
+                                </span>
+
+                            } @else if (credit.creditLow) {
+
+                                <strong>
+                                    Low credit remaining
+                                </strong>
+
+                                <span>
+                                    Less than 10% of the customer's
+                                    credit limit will remain after
+                                    this order.
+                                </span>
+
+                            } @else {
+
+                                <strong>
+                                    Credit available
+                                </strong>
+
+                                <span>
+                                    Customer has sufficient credit
+                                    for this order.
+                                </span>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Credit numbers -->
+                    <div class="credit-metrics">
+
+                        <div class="credit-metric">
+
+                            <span>
+                                Credit limit
+                            </span>
+
+                            <strong>
+                                ₹{{ credit.creditLimit | number:'1.2-2' }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="credit-metric">
+
+                            <span>
+                                Current outstanding
+                            </span>
+
+                            <strong>
+                                ₹{{ credit.currentOutstanding | number:'1.2-2' }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="credit-metric">
+
+                            <span>
+                                Available now
+                            </span>
+
+                            <strong>
+                                ₹{{ credit.availableCredit | number:'1.2-2' }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="credit-metric credit-metric--after">
+
+                            <span>
+                                Remaining after order
+                            </span>
+
+                            @if (credit.availableCreditAfterOrder < 0) {
+
+                                <strong>
+                                    − ₹{{ (-credit.availableCreditAfterOrder) | number:'1.2-2' }}
+                                </strong>
+
+                            } @else {
+
+                                <strong>
+                                    ₹{{ credit.availableCreditAfterOrder | number:'1.2-2' }}
+                                </strong>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+
+            <!-- =====================================================
+                 ORDER ITEMS
+                 ===================================================== -->
+
+            <div class="section-title section-title--products">
+
+                <div>
+                    <strong>
+                        Order items
+                    </strong>
+
+                    <span>
+                        Add products and set the agreed selling price.
+                    </span>
+                </div>
+
+                <strong class="item-count">
+                    {{ items.length }}
+                    {{ items.length === 1 ? 'item' : 'items' }}
+                </strong>
+
+            </div>
+
+
+            <!-- Add item -->
+            <div class="add-item-box">
+
+                <div class="add-item-grid">
+
+                    <label class="field">
+
+                        <span>
+                            Product
+                        </span>
+
+                        <select
+                            [(ngModel)]="selectedProductId"
+                            [ngModelOptions]="{ standalone: true }"
+                            (change)="productChanged()">
+
+                            <option [ngValue]="0">
+                                Select product
+                            </option>
+
+                            @for (
+                                product of products;
+                                track product.id
+                            ) {
+
+                                <option [ngValue]="product.id">
+                                    {{ product.name }} — {{ product.sku }}
+                                </option>
+
+                            }
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="field quantity-field">
+
+                        <span>
+                            Quantity
+                        </span>
+
+                        <input
+                            type="number"
+                            min="0.001"
+                            step="0.001"
+                            [(ngModel)]="itemQuantity"
+                            [ngModelOptions]="{ standalone: true }" />
+
+                    </label>
+
+
+                    <label class="field price-field">
+
+                        <span>
+                            Unit price (₹)
+                        </span>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            [(ngModel)]="itemUnitPrice"
+                            [ngModelOptions]="{ standalone: true }" />
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        class="secondary-button add-item-button"
+                        (click)="addItem()">
+
+                        + Add item
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Items -->
+            @if (items.length > 0) {
+
+                <div class="items-table">
+
+                    <div class="items-header">
+                        <span>PRODUCT</span>
+                        <span>QUANTITY</span>
+                        <span>UNIT PRICE</span>
+                        <span>TOTAL</span>
+                        <span></span>
+                    </div>
+
+
+                    @for (
+                        item of items;
+                        track item.productId;
+                        let i = $index
+                    ) {
+
+                        <div class="item-row">
+
+                            <div class="item-product">
+
+                                <strong>
+                                    {{ item.productName }}
+                                </strong>
+
+                                <small>
+                                    {{ item.sku }}
+                                </small>
+
+                            </div>
+
+
+                            <input
+                                class="item-input item-input--quantity"
+                                type="number"
+                                min="0.001"
+                                step="0.001"
+                                [ngModel]="item.quantity"
+                                [ngModelOptions]="{ standalone: true }"
+                                (ngModelChange)="updateQuantity(item, $event)" />
+
+
+                            <div class="price-input">
+
+                                <span>₹</span>
+
+                                <input
+                                    class="item-input"
+                                    type="number"
+                                    min="0"
+                                    step="0.01"
+                                    [ngModel]="item.unitPrice"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (ngModelChange)="updatePrice(item, $event)" />
+
+                            </div>
+
+
+                            <strong class="line-total">
+                                ₹{{ lineTotal(item) | number:'1.2-2' }}
+                            </strong>
+
+
+                            <button
+                                type="button"
+                                class="remove-item"
+                                (click)="removeItem(i)">
+
+                                Remove
+
+                            </button>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            } @else {
+
+                <div class="empty-items">
+                    No products added yet.
+                </div>
+
+            }
+
+
+            <!-- =====================================================
+                 PRICING
+                 ===================================================== -->
+
+            <div class="section-title">
+
+                <div>
+                    <strong>
+                        Pricing
+                    </strong>
+
+                    <span>
+                        Apply an order-level discount if required.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="pricing-grid">
+
+
+                <!-- Discount -->
+                <div class="discount-field">
+
+                    <span class="field-label">
+                        Discount
+                    </span>
+
+
+                    <div class="discount-control">
+
+                        <div class="discount-toggle">
+
+                            <button
+                                type="button"
+                                class="discount-option"
+                                [class.active]="discountType === 'AMOUNT'"
+                                (click)="setDiscountType('AMOUNT')">
+
+                                ₹ Amount
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="discount-option"
+                                [class.active]="discountType === 'PERCENTAGE'"
+                                (click)="setDiscountType('PERCENTAGE')">
+
+                                % Percentage
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="discount-input-wrapper">
+
+                            <span>
+                                {{ discountType === 'PERCENTAGE' ? '%' : '₹' }}
+                            </span>
+
+                            <input
+                                type="number"
+                                min="0"
+                                [max]="discountType === 'PERCENTAGE' ? 100 : subtotal"
+                                step="0.01"
+                                formControlName="discountValue"
+                                placeholder="0" />
+
+                        </div>
+
+                    </div>
+
+
+                    @if (discountType === 'PERCENTAGE') {
+
+                        <small class="discount-hint">
+                            Enter a percentage from 0% to 100%.
+                        </small>
+
+                    } @else {
+
+                        <small class="discount-hint">
+                            Enter a fixed discount amount.
+                        </small>
+
+                    }
+
+
+                    <div class="discount-preview">
+
+                        <span>
+                            Discount applied
+                        </span>
+
+                        <strong>
+                            − ₹{{ discountAmount | number:'1.2-2' }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Totals -->
+                <div class="totals">
+
+                    <div>
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            ₹{{ subtotal | number:'1.2-2' }}
+                        </strong>
+                    </div>
+
+
+                    <div>
+                        <span>
+                            Discount
+
+                            @if (discountType === 'PERCENTAGE') {
+                                <small>
+                                    ({{ discountValue }}%)
+                                </small>
+                            }
+                        </span>
+
+                        <strong>
+                            − ₹{{ discountAmount | number:'1.2-2' }}
+                        </strong>
+                    </div>
+
+
+                    <div class="grand-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ₹{{ total | number:'1.2-2' }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 NOTES
+                 ===================================================== -->
+
+            <div class="section-title">
+
+                <div>
+                    <strong>
+                        Notes
+                    </strong>
+
+                    <span>
+                        Optional instructions for this order.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <label class="field">
+
+                <span>
+                    Order notes
+                </span>
+
+                <textarea
+                    rows="4"
+                    formControlName="notes"
+                    placeholder="Delivery instructions, customer requirements..."></textarea>
+
+            </label>
+
+
+            <!-- =====================================================
+                 ACTIONS
+                 ===================================================== -->
+
+            <div class="form-actions">
+
+                <a
+                    routerLink="/orders"
+                    class="secondary-button">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                    [disabled]="saving">
+
+                    @if (saving) {
+                        Saving...
+                    } @else {
+                        {{ editing ? 'Save changes' : 'Create order' }}
+                    }
+
+                </button>
+
+            </div>
+
+        </form>
+
+    }
+
+</section>

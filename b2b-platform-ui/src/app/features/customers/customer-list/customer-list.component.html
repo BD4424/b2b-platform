@@ -1,0 +1,185 @@
+<section class="customers-page">
+
+    <div class="page-heading">
+        <div>
+            <div class="eyebrow">CRM / CUSTOMERS</div>
+
+            <h1>Customers</h1>
+
+            <p>
+                Customer profiles, purchase history and interactions.
+            </p>
+        </div>
+
+        <a routerLink="new" class="primary-button">
+            + Add customer
+        </a>
+    </div>
+
+
+    <div class="toolbar">
+        <label class="search-box">
+            <span>⌕</span>
+            <input [(ngModel)]="search" (keyup.enter)="searchCustomers()" placeholder="Search by customer name" />
+        </label>
+
+        <button class="text-button" type="button" (click)="resetFilters()">
+            Reset
+        </button>
+    </div>
+
+
+    @if (error) {
+    <div class="error-banner">
+        {{ error }}
+    </div>
+    }
+
+
+    <div class="table-card">
+
+        <div class="table-header">
+            <strong>Customer directory</strong>
+
+            <span>
+                {{ totalElements }} customers
+            </span>
+        </div>
+
+
+        @if (loading) {
+
+        <div class="state">
+            Loading customers...
+        </div>
+
+        } @else if (customers.length === 0) {
+
+        <div class="state">
+            No customers found. Add your first customer.
+        </div>
+
+        } @else {
+
+        <div class="table-scroll">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>CUSTOMER</th>
+                        <th>TYPE</th>
+                        <th>LOCATION</th>
+                        <th>PHONE</th>
+                        <th>CREDIT LIMIT</th>
+                        <th>OUTSTANDING</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    @for (
+                    customer of customers;
+                    track customer.id
+                    ) {
+
+                    <tr>
+
+                        <td>
+                            <div class="customer-name">
+                                {{ customer.name }}
+                            </div>
+
+                            @if (customer.email) {
+                            <small>
+                                {{ customer.email }}
+                            </small>
+                            }
+                        </td>
+
+
+                        <td>
+                            {{ customer.customerType }}
+                        </td>
+
+
+                        <td>
+                            @if (customer.city) {
+                            {{ customer.city }}
+                            @if (customer.state) {
+                            , {{ customer.state }}
+                            }
+                            } @else {
+                            —
+                            }
+                        </td>
+
+
+                        <td>
+                            {{ customer.phone || '—' }}
+                        </td>
+
+
+                        <td>
+                            ₹{{ customer.creditLimit | number:'1.2-2' }}
+                        </td>
+
+
+                        <td>
+                            <span [class]="outstandingClass(customer.outstandingAmount)">
+                                ₹{{ customer.outstandingAmount | number:'1.2-2' }}
+                            </span>
+                        </td>
+
+
+                        <td class="actions">
+
+                            <a [routerLink]="[customer.id, 'edit']">
+                                Edit
+                            </a>
+
+                            <button type="button" (click)="deleteCustomer(customer)">
+                                Delete
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="pagination">
+
+            <span>
+                Page {{ page + 1 }}
+                of {{ totalPages || 1 }}
+            </span>
+
+            <div>
+
+                <button type="button" (click)="previous()" [disabled]="page === 0">
+                    ←
+                </button>
+
+                <button type="button" (click)="next()" [disabled]="page + 1 >= totalPages">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</section>

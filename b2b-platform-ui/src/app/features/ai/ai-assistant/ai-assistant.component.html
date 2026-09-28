@@ -1,0 +1,114 @@
+@if (open) {
+
+  <aside class="ai-panel">
+    <header class="ai-header">
+      <div class="ai-brand">
+        <div class="ai-icon">
+          ✦
+        </div>
+        <div>
+          <strong>SupplyDesk AI</strong>
+          <span>Your workspace assistant</span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="ai-close"
+        aria-label="Close AI assistant"
+        (click)="close()">
+        ×
+      </button>
+
+    </header>
+
+
+    <div #messagesContainer class="ai-messages">
+
+      @if (messages.length === 1) {
+        <div class="ai-suggestions">
+          <span class="suggestion-label">
+            Try asking
+          </span>
+
+          <button
+            type="button"
+            (click)="askSuggestion('Show me today’s orders')">
+            Show me today’s orders
+          </button>
+
+          <button
+            type="button"
+            (click)="askSuggestion('Which products are low in stock?')">
+            Which products are low in stock?
+          </button>
+
+          <button
+            type="button"
+            (click)="askSuggestion('Find a customer')">
+            Find a customer
+          </button>
+
+        </div>
+
+      }
+
+
+      @for (message of messages; track $index) {
+
+        <div class="chat-message" [class.user-message]="message.role === 'user'" [class.assistant-message]="message.role === 'assistant'">
+          @if (message.role === 'assistant') {
+            <div class="message-avatar">
+              ✦
+            </div>
+          }
+
+          <div class="message-bubble">
+            {{ message.content }}
+          </div>
+
+        </div>
+
+      }
+
+      @if (loading) {
+        <div class="chat-message assistant-message">
+          <div class="message-avatar">
+            ✦
+          </div>
+          <div class="message-bubble typing">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      }
+
+    </div>
+
+    <form
+      class="ai-input" (ngSubmit)="send()">
+
+      <textarea
+        [(ngModel)]="input"
+        name="message"
+        rows="1"
+        placeholder="Ask SupplyDesk anything..."
+        [disabled]="loading"
+        (keydown.enter)="handleEnter($event)">
+      </textarea>
+
+      <button
+        type="submit"
+        [disabled]="!input.trim() || loading"
+        aria-label="Send message">
+        ↑
+      </button>
+    </form>
+  </aside>
+
+}
+
+<button *ngIf="!open" type="button" class="ai-fab" aria-label="Open SupplyDesk AI" (click)="toggle()">
+  <span>✦</span>
+</button>

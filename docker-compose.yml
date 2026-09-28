@@ -1,0 +1,45 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: b2b-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: b2b_platform
+      MYSQL_USER: b2b_user
+      MYSQL_PASSWORD: b2b_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: ./b2b-platform
+    container_name: b2b-api
+    restart: unless-stopped
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/b2b_platform?useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true
+      DB_USERNAME: b2b_user
+      DB_PASSWORD: b2b_password
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  ui:
+    build: ./b2b-platform-ui
+    container_name: b2b-ui
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+volumes:
+  mysql_data:

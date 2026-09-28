@@ -1,0 +1,784 @@
+<section class="settings-page">
+
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <div class="page-heading">
+
+    <div>
+      <div class="eyebrow">
+        WORKSPACE
+      </div>
+      <h1>
+        Settings
+      </h1>
+      <p>
+        Configure your business, sales, inventory and notification preferences.
+      </p>
+    </div>
+
+    <div class="heading-actions">
+      @if (saved) {
+        <span class="saved-message">
+          ✓ Changes saved
+        </span>
+      }
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="resetSettings()">
+        Reset
+      </button>
+
+      <button
+        type="button"
+        class="primary-button"
+        [disabled]="saving"
+        (click)="saveSettings()">
+        {{ saving ? 'Saving...' : 'Save changes' }}
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="settings-layout">
+
+
+    <!-- ===================================================
+         SIDEBAR
+         =================================================== -->
+
+    <nav class="settings-nav">
+
+  <div class="settings-nav-title">
+    Settings
+  </div>
+
+
+  <button
+    type="button"
+    (click)="scrollToSection('business')">
+
+    <span class="nav-icon">
+      ◯
+    </span>
+
+    Business profile
+
+  </button>
+
+
+  <button
+    type="button"
+    (click)="scrollToSection('sales')">
+
+    <span class="nav-icon">
+      ＝
+    </span>
+
+    Sales & orders
+
+  </button>
+
+
+  <button
+    type="button"
+    (click)="scrollToSection('inventory')">
+
+    <span class="nav-icon">
+      ◇
+    </span>
+
+    Inventory
+
+  </button>
+
+
+  <button
+    type="button"
+    (click)="scrollToSection('notifications')">
+
+    <span class="nav-icon">
+      ♧
+    </span>
+
+    Notifications
+
+  </button>
+
+
+  <button
+    type="button"
+    (click)="scrollToSection('appearance')">
+
+    <span class="nav-icon">
+      ✦
+    </span>
+
+    Appearance
+
+  </button>
+
+</nav>
+
+
+
+    <!-- ===================================================
+         CONTENT
+         =================================================== -->
+
+    <main class="settings-content">
+
+
+      <!-- =================================================
+           BUSINESS
+           ================================================= -->
+
+      <section
+        id="business"
+        class="settings-card">
+
+        <div class="section-header">
+
+          <div class="section-icon">
+            ◯
+          </div>
+
+          <div>
+
+            <h2>
+              Business profile
+            </h2>
+
+            <p>
+              Information used across your workspace and documents.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="settings-fields">
+
+
+          <label class="field field--full">
+
+            <span>
+              Business name
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessName"
+              placeholder="Your business name" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              Phone
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessPhone"
+              placeholder="Business phone" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              Email
+            </span>
+
+            <input
+              type="email"
+              [(ngModel)]="settings.businessEmail"
+              placeholder="business@example.com" />
+
+          </label>
+
+
+          <label class="field field--full">
+
+            <span>
+              Address
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessAddress"
+              placeholder="Business address" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              City
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessCity"
+              placeholder="City" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              State
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessState"
+              placeholder="State" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              Postal code
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.businessPostalCode"
+              placeholder="Postal code" />
+
+          </label>
+
+
+          <label class="field">
+
+            <span>
+              Tax / GST number
+            </span>
+
+            <input
+              type="text"
+              [(ngModel)]="settings.taxNumber"
+              placeholder="Optional" />
+
+          </label>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           SALES
+           ================================================= -->
+
+      <section
+        id="sales"
+        class="settings-card">
+
+        <div class="section-header">
+
+          <div class="section-icon">
+            ＝
+          </div>
+
+          <div>
+
+            <h2>
+              Sales & orders
+            </h2>
+
+            <p>
+              Control credit behaviour and order defaults.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="setting-options">
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Allow credit limit override
+              </strong>
+
+              <span>
+                Allow users to create orders even when the customer exceeds their credit limit.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.allowCreditLimitOverride" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Credit warning threshold
+              </strong>
+
+              <span>
+                Show an orange warning when this percentage of available credit remains.
+              </span>
+
+            </div>
+
+
+            <div class="inline-number">
+
+              <input
+                type="number"
+                min="1"
+                max="50"
+                [(ngModel)]="settings.creditWarningThreshold" />
+
+              <span>%</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Default discount type
+              </strong>
+
+              <span>
+                The default discount mode when creating a new order.
+              </span>
+
+            </div>
+
+
+            <select
+              [(ngModel)]="settings.defaultDiscountType">
+
+              <option value="AMOUNT">
+                ₹ Amount
+              </option>
+
+              <option value="PERCENTAGE">
+                % Percentage
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           INVENTORY
+           ================================================= -->
+
+      <section
+        id="inventory"
+        class="settings-card">
+
+        <div class="section-header">
+
+          <div class="section-icon">
+            ◇
+          </div>
+
+          <div>
+
+            <h2>
+              Inventory
+            </h2>
+
+            <p>
+              Configure stock behaviour and inventory warnings.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="setting-options">
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Low-stock threshold
+              </strong>
+
+              <span>
+                Products at or below this quantity will be considered low stock.
+              </span>
+
+            </div>
+
+
+            <div class="inline-number">
+
+              <input
+                type="number"
+                min="0"
+                [(ngModel)]="settings.lowStockThreshold" />
+
+              <span>
+                units
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Allow negative stock
+              </strong>
+
+              <span>
+                Allow inventory to fall below zero when completing orders.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.allowNegativeStock" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Deduct stock when order is completed
+              </strong>
+
+              <span>
+                Inventory is reduced only when an order changes to Completed.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.deductStockOnCompletion" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           NOTIFICATIONS
+           ================================================= -->
+
+      <section
+        id="notifications"
+        class="settings-card">
+
+        <div class="section-header">
+
+          <div class="section-icon">
+            ♧
+          </div>
+
+          <div>
+
+            <h2>
+              Notifications
+            </h2>
+
+            <p>
+              Choose which business events should generate alerts.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="setting-options">
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Low-stock alerts
+              </strong>
+
+              <span>
+                Notify when products reach the configured stock threshold.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.lowStockNotifications" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Credit-limit alerts
+              </strong>
+
+              <span>
+                Show warnings when customers approach or exceed their credit limit.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.creditLimitNotifications" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Lead follow-up alerts
+              </strong>
+
+              <span>
+                Enable reminders for pending sales follow-ups.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.leadFollowUpNotifications" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           APPEARANCE
+           ================================================= -->
+
+      <section
+        id="appearance"
+        class="settings-card">
+
+        <div class="section-header">
+
+          <div class="section-icon">
+            ✦
+          </div>
+
+          <div>
+
+            <h2>
+              Appearance
+            </h2>
+
+            <p>
+              Adjust how information is displayed in SupplyDesk.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="setting-options">
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Currency
+              </strong>
+
+              <span>
+                Currency used for prices, orders and financial values.
+              </span>
+
+            </div>
+
+
+            <select
+              [(ngModel)]="settings.currency">
+
+              <option value="INR">
+                ₹ Indian Rupee
+              </option>
+
+              <option value="USD">
+                $ US Dollar
+              </option>
+
+              <option value="EUR">
+                € Euro
+              </option>
+
+              <option value="GBP">
+                £ British Pound
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="setting-option">
+
+            <div>
+
+              <strong>
+                Compact tables
+              </strong>
+
+              <span>
+                Reduce row height to display more records on screen.
+              </span>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.compactTables" />
+
+              <span></span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <div class="bottom-actions">
+
+        <span>
+          Changes are saved only when you select Save changes.
+        </span>
+
+        <button
+          type="button"
+          class="primary-button"
+          [disabled]="saving"
+          (click)="saveSettings()">
+
+          {{ saving ? 'Saving...' : 'Save changes' }}
+
+        </button>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</section>

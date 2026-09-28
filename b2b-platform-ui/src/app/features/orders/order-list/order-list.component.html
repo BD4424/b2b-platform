@@ -1,0 +1,197 @@
+<section class="orders-page">
+
+    <div class="page-heading">
+
+        <div>
+            <div class="eyebrow">
+                SALES / ORDERS
+            </div>
+
+            <h1>Orders</h1>
+
+            <p>
+                Manage customer orders, products and order values.
+            </p>
+        </div>
+
+        <a routerLink="new" class="primary-button">
+            + Create order
+        </a>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <label class="search-box">
+
+            <span>⌕</span>
+
+            <input [(ngModel)]="search" (keyup.enter)="searchOrders()" placeholder="Search by order number" />
+
+        </label>
+
+        <button type="button" class="text-button" (click)="resetSearch()">
+            Reset
+        </button>
+
+    </div>
+
+
+    @if (error) {
+
+    <div class="error-banner">
+        {{ error }}
+    </div>
+
+    }
+
+
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <strong>
+                Order directory
+            </strong>
+
+            <span>
+                {{ totalElements }} orders
+            </span>
+
+        </div>
+
+
+        @if (loading) {
+
+        <div class="state">
+            Loading orders...
+        </div>
+
+        } @else if (orders.length === 0) {
+
+        <div class="state">
+            No orders found. Create your first order.
+        </div>
+
+        } @else {
+
+        <div class="table-scroll">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ORDER</th>
+                        <th>CUSTOMER</th>
+                        <th>DATE</th>
+                        <th>ITEMS</th>
+                        <th>STATUS</th>
+                        <th>TOTAL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    @for (
+                    order of orders;
+                    track order.id
+                    ) {
+
+                    <tr class="clickable-row" (click)="openOrder(order.id)" title="Open order details">
+
+                        <td>
+                            <div class="order-number">
+                                {{ order.orderNumber }}
+                            </div>
+                        </td>
+
+
+                        <td>
+                            <div class="customer-name">
+                                {{ order.customerName }}
+                            </div>
+                        </td>
+
+
+                        <td>
+                            {{ order.orderDate | date:'dd MMM yyyy' }}
+                        </td>
+
+
+                        <td>
+                            {{ order.items.length }}
+                            {{ order.items.length === 1 ? 'item' : 'items' }}
+                        </td>
+
+
+                        <td>
+                            <span [class]="statusClass(order.status)">
+                                {{ order.status }}
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <strong class="order-total">
+                                ₹{{ order.totalAmount | number:'1.2-2' }}
+                            </strong>
+                        </td>
+
+
+                        <td class="actions" (click)="$event.stopPropagation()">
+
+                            @if (order.status === 'PENDING') {
+
+                            <a [routerLink]="[order.id, 'edit']" (click)="$event.stopPropagation()">
+                                Edit
+                            </a>
+
+                            <button type="button" (click)="deleteOrder(order); $event.stopPropagation()">
+                                Delete
+                            </button>
+
+
+                            }
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="pagination">
+
+            <span>
+                Page {{ page + 1 }}
+                of {{ totalPages || 1 }}
+            </span>
+
+            <div>
+
+                <button type="button" (click)="previous()" [disabled]="page === 0">
+                    ←
+                </button>
+
+                <button type="button" (click)="next()" [disabled]="page + 1 >= totalPages">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</section>

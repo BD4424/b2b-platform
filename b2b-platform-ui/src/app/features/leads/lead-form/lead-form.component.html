@@ -1,0 +1,365 @@
+<section class="form-page">
+
+
+  <a
+    routerLink="/leads"
+    class="back">
+
+    ← Back to leads
+
+  </a>
+
+
+  <div class="heading">
+
+    <div class="eyebrow">
+      SALES OPERATIONS
+    </div>
+
+    <h1>
+      {{ editing ? 'Edit lead' : 'Create lead' }}
+    </h1>
+
+    <p>
+      Capture a potential customer and track the sales opportunity.
+    </p>
+
+  </div>
+
+
+  @if (error) {
+
+    <div class="error-banner">
+      {{ error }}
+    </div>
+
+  }
+
+
+  @if (loading) {
+
+    <div class="form-card state">
+      Loading lead...
+    </div>
+
+  } @else {
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="save()"
+      class="form-card">
+
+
+      <!-- =====================================================
+           CONTACT
+           ===================================================== -->
+
+      <div class="section-title">
+
+        <div>
+
+          <strong>
+            Contact information
+          </strong>
+
+          <span>
+            Basic information about the potential customer.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+
+        <label class="field">
+
+          <span>
+            Lead name *
+          </span>
+
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="e.g. Rahul Sharma" />
+
+          @if (
+            form.controls.name.invalid &&
+            form.controls.name.touched
+          ) {
+
+            <small class="field-error">
+              Lead name is required.
+            </small>
+
+          }
+
+        </label>
+
+
+        <label class="field">
+
+          <span>
+            Company
+          </span>
+
+          <input
+            type="text"
+            formControlName="company"
+            placeholder="e.g. ABC Electricals" />
+
+        </label>
+
+
+        <label class="field">
+
+          <span>
+            Phone
+          </span>
+
+          <input
+            type="text"
+            formControlName="phone"
+            placeholder="Phone number" />
+
+        </label>
+
+
+        <label class="field">
+
+          <span>
+            Email
+          </span>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="email@example.com" />
+
+          @if (
+            form.controls.email.invalid &&
+            form.controls.email.touched
+          ) {
+
+            <small class="field-error">
+              Enter a valid email address.
+            </small>
+
+          }
+
+        </label>
+
+      </div>
+
+
+      <!-- =====================================================
+           PIPELINE
+           ===================================================== -->
+
+      <div class="section-title">
+
+        <div>
+
+          <strong>
+            Pipeline
+          </strong>
+
+          <span>
+            Track where this lead currently stands.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+
+        <label class="field">
+
+          <span>
+            Status *
+          </span>
+
+          <select
+            formControlName="status">
+
+            @for (
+              status of statuses;
+              track status
+            ) {
+
+              <option [ngValue]="status">
+                {{ formatStatus(status) }}
+              </option>
+
+            }
+
+          </select>
+
+        </label>
+
+
+        <label class="field">
+
+          <span>
+            Lead source
+          </span>
+
+          <select
+            formControlName="source">
+
+            <option [ngValue]="null">
+              Select source
+            </option>
+
+            @for (
+              source of sources;
+              track source
+            ) {
+
+              <option [ngValue]="source">
+                {{ formatSource(source) }}
+              </option>
+
+            }
+
+          </select>
+
+        </label>
+
+      </div>
+
+
+      <!-- =====================================================
+           OPPORTUNITY
+           ===================================================== -->
+
+      <div class="section-title">
+
+        <div>
+
+          <strong>
+            Opportunity
+          </strong>
+
+          <span>
+            Estimate the potential value and expected close date.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+
+        <label class="field">
+
+          <span>
+            Expected value (₹)
+          </span>
+
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            formControlName="expectedValue"
+            placeholder="0" />
+
+        </label>
+
+
+        <label class="field">
+
+          <span>
+            Expected close date
+          </span>
+
+          <input
+            type="date"
+            formControlName="expectedCloseDate" />
+
+        </label>
+
+      </div>
+
+
+      <!-- =====================================================
+           NOTES
+           ===================================================== -->
+
+      <div class="section-title">
+
+        <div>
+
+          <strong>
+            Notes
+          </strong>
+
+          <span>
+            Add useful context for follow-ups and sales conversations.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <label class="field">
+
+        <span>
+          Lead notes
+        </span>
+
+        <textarea
+          rows="5"
+          formControlName="notes"
+          placeholder="Customer requirements, products discussed, follow-up details..."></textarea>
+
+      </label>
+
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
+
+      <div class="form-actions">
+
+        <a
+          routerLink="/leads"
+          class="secondary-button">
+
+          Cancel
+
+        </a>
+
+
+        <button
+          type="submit"
+          class="primary-button"
+          [disabled]="saving">
+
+          @if (saving) {
+
+            Saving...
+
+          } @else {
+
+            {{ editing ? 'Save changes' : 'Create lead' }}
+
+          }
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</section>
