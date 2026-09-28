@@ -8,6 +8,7 @@ import {
   LeadRequest,
   LeadStatus
 } from '../../shared/models/lead.model';
+import { API_URL } from '../../app.config';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class LeadService {
   private readonly http = inject(HttpClient);
 
   private readonly baseUrl =
-    'http://localhost:8080/api/leads';
+    `${API_URL}/leads`;
 
 
   getLeads(

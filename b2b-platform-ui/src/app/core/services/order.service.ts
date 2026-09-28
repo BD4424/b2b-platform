@@ -9,6 +9,7 @@ import {
     OrderRequest,
     OrderStatus
 } from '../../shared/models/order.model';
+import { API_URL } from '../../app.config';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ export class OrderService {
     private readonly http = inject(HttpClient);
 
     private readonly apiUrl =
-        'http://localhost:8080/api/orders';
+        `${API_URL}/orders`;
 
     getOrders(
         page = 0,

@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LookupItem, PageResponse, Product, ProductRequest, ProductSpecification, ProductSpecificationRequest } from '../../shared/models/product.model';
+import { API_URL } from '../../app.config';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/products';
-  private readonly specificationApiUrl = 'http://localhost:8080/api/products-specification';
+  private readonly apiUrl = `${API_URL}/products`;
+  private readonly specificationApiUrl = `${API_URL}/products-specification`;
 
   getProducts(page = 0, size = 10, search = '', categoryId?: number, brandId?: number): Observable<PageResponse<Product>> {
     let params = new HttpParams().set('page', page).set('size', size).set('search', search);

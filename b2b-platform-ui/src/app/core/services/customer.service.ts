@@ -6,6 +6,7 @@ import {
   CustomerPageResponse,
   CustomerRequest
 } from '../../shared/models/customer.model';
+import { API_URL } from '../../app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CustomerService {
   private readonly http = inject(HttpClient);
 
   private readonly apiUrl =
-    'http://localhost:8080/api/customers';
+    `${API_URL}/customers`;
 
   getCustomers(
     page = 0,
